@@ -17,6 +17,7 @@ public class Magpie5{
    * Get a default greeting  
    * @return a greeting
    */ 
+  
   public String getGreeting(){
     return "Hello, let's talk.";
   }
@@ -29,6 +30,7 @@ public class Magpie5{
    * @return a response based on the rules given
    */
   public String getResponse(String statement){
+    int endOfString = statement.length();
     String response = "";
     if (statement.length() == 0){
       response = "Say something, please.";
@@ -67,10 +69,29 @@ public class Magpie5{
     }
     else if (findKeyword(statement,"is",0) >= 0){    //if the statement has "is" in it
       int isPsn = findKeyword(statement,"is");
-      int endOfString = statement.length();
       String beginningOfStatement = statement.substring(0, isPsn).trim();      //take out "is" and put "why is" in front
       String endOfStatement = statement.substring(isPsn+2, endOfString).trim();
       response = "Why is " + beginningOfStatement + " " + endOfStatement + "?";
+    }
+    else if (findKeyword(statement,"are",0) >=0){
+      if (findKeyword(statement,"you are",0) >= 0){
+        int areYouPsn = findKeyword(statement,"you are");
+        String beginningOfStatement = statement.substring(0, areYouPsn).trim();
+        String endOfStatement = statement.substring(areYouPsn+7, endOfString).trim();
+        response = "Why am I " + beginningOfStatement + " " + endOfStatement + "?";
+      }
+      if (findKeyword(statement,"you",0) >= 0){
+        int arePsn = findKeyword(statement,"are");
+        String beginningOfStatement = statement.substring(0, arePsn).trim();
+        String endOfStatement = statement.substring(arePsn+3, endOfString).trim();
+        response = "Why are " + beginningOfStatement + " " + endOfStatement + "?";
+      }
+    }
+    else if (findKeyword(statement, "I am", 0) >= 0){
+      int IamPsn = findKeyword(statement,"I am");
+      String beginningOfStatement = statement.substring(0, IamPsn).trim();
+      String endOfStatement = statement.substring(IamPsn+4, endOfString).trim();
+      response = "Why are you " + beginningOfStatement + " " + endOfStatement + "?";
     }
     
     else{
